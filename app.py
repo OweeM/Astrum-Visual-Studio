@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, send_from_directory
 import os
 
 app = Flask(__name__)
@@ -14,7 +14,8 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 @app.route('/')
 def index():
     images = os.listdir(app.config['UPLOAD_FOLDER'])
-    return render_template('index.html', images=images)
+    # Render the index.html from the root directory
+    return send_from_directory('', 'index.html', images=images)
 
 @app.route('/slideshow', methods=['POST'])
 def slideshow():
